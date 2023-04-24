@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        int[] myNumList = new int[10000];
+        int[] myNumList = new int[10];
         long start = System.nanoTime();
         for(int i = 0; i < myNumList.length; i++){
             myNumList[i] = (int)(Math.random()*(99+1)+1); //rand ints between 1 and 100
@@ -18,7 +18,7 @@ public class Main {
 
         //linear search
         long start1 = System.nanoTime();
-        int location = linearSearch(myNumList,randNumToFind);
+        int location = linearSearch(myNumList,101);
         long end1 = System.nanoTime();
         System.out.println();
         System.out.println("Location: " + location);
@@ -26,7 +26,7 @@ public class Main {
 
         //binary search
         long start2 = System.nanoTime();
-        int location2 = binarySearch(myNumList,randNumToFind,0,myNumList.length-1);
+        int location2 = binarySearch(myNumList,101,0,myNumList.length-1);
         long end2 = System.nanoTime();
         System.out.println();
         System.out.println("Location: " + location2);
@@ -42,22 +42,28 @@ public class Main {
                 return i;
             }
         }
-        return Integer.MAX_VALUE;
+        return -1;
     }
 
     public static int binarySearch(int[] array, int target,
                                        int start, int end){
         int mid = (start+end)/2;
 
-        if(target == array[mid]){ //base case
-            return mid;
+
+        if(target == array[mid]){ //base case if target in list
+                return mid;
         }
+
+        if(start == end){ //base case if target not in list
+            return -1;
+        }
+
         if(target < array[mid]){
             return binarySearch(array,target, start, mid-1);
         }
         if(target > array[mid]){
             return binarySearch(array,target, mid+1, end);
         }
-        return Integer.MAX_VALUE;
+        return -1;
     }
 }
